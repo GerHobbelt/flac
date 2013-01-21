@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include "FLAC++/metadata.h"
 #include "FLAC++/encoder.h"
+#include <string.h>
 
 class OurEncoder: public FLAC::Encoder::File {
 public:
