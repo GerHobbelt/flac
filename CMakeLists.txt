@@ -9,6 +9,7 @@ project(FLAC VERSION 1.3.2) # HOMEPAGE_URL "https://www.xiph.org/flac/")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 option(BUILD_CXXLIBS "Build libFLAC++" ON)
+option(BUILD_EXECUTABLES "Build executables" ON)
 option(BUILD_EXAMPLES "Build and install examples" ON)
 option(WITH_OGG "ogg support (default: test for libogg)" ON)
 
@@ -95,7 +96,9 @@ endif()
 
 add_subdirectory("doc")
 add_subdirectory("src")
-add_subdirectory("microbench")
+if(BUILD_EXECUTABLES)
+    add_subdirectory("microbench")
+endif()
 if(BUILD_EXAMPLES)
     add_subdirectory("examples")
 endif()
