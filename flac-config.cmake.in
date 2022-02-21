@@ -1,7 +1,11 @@
 @PACKAGE_INIT@
 
+if(HUNTER_ENABLED)
+find_package(libogg CONFIG)
+else()
 include(CMakeFindDependencyMacro)
 find_dependency(Ogg)
+endif()
 
 include("${CMAKE_CURRENT_LIST_DIR}/targets.cmake")
 

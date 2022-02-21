@@ -8,6 +8,16 @@ if(NOT (CMAKE_BUILD_TYPE OR CMAKE_CONFIGURATION_TYPES OR DEFINED ENV{CFLAGS} OR 
     set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build, options are: None Debug Release RelWithDebInfo")
 endif()
 
+option(HUNTER_ENABLED "Enable Hunter package manager" OFF)
+
+if(HUNTER_ENABLED)
+include(cmake/HunterGate.cmake)
+HunterGate(
+    URL "https://github.com/cpp-pm/hunter/archive/v0.23.322.tar.gz"
+    SHA1 "cb0ea1f74f4a2c49a807de34885743495fccccbe"
+)
+endif()
+
 project(FLAC VERSION 1.3.4) # HOMEPAGE_URL "https://www.xiph.org/flac/")
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -26,7 +36,13 @@ option(WITH_OGG "ogg support (default: test for libogg)" ON)
 set(VERSION ${PROJECT_VERSION})
 
 if(WITH_OGG)
+if(HUNTER_ENABLED)
+    hunter_add_package(libogg)
+    find_package(libogg CONFIG REQUIRED)
+    set(OGG_FOUND true)
+else()
     find_package(Ogg REQUIRED)
+endif()
     set(OGG_PACKAGE "ogg")
 endif()
 
